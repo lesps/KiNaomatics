@@ -1,0 +1,12 @@
+digraph G
+{
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  Node1 [label="{xn::ModuleIRGenerator\n||+ ~ModuleIRGenerator()\l+ GetData()\l+ GetBytesPerPixel()\l+ GetIRMap()\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node2 [label="{xn::ModuleMapGenerator\n||+ ~ModuleMapGenerator()\l+ GetSupportedMapOutputModesCount()\l+ GetSupportedMapOutputModes()\l+ SetMapOutputMode()\l+ GetMapOutputMode()\l+ RegisterToMapOutputModeChange()\l+ UnregisterFromMapOutputModeChange()\l+ GetBytesPerPixel()\l+ GetCroppingInterface()\l+ GetAntiFlickerInterface()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_module_map_generator.html"];
+  Node3 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node3 [label="{xn::ModuleGenerator\n||+ ~ModuleGenerator()\l+ StartGenerating()\l+ IsGenerating()\l+ StopGenerating()\l+ RegisterToGenerationRunningChange()\l+ UnregisterFromGenerationRunningChange()\l+ RegisterToNewDataAvailable()\l+ UnregisterFromNewDataAvailable()\l+ IsNewDataAvailable()\l+ UpdateData()\l+ GetData()\l+ GetDataSize()\l+ GetTimestamp()\l+ GetFrameID()\l+ GetMirrorInterface()\l+ GetAlternativeViewPointInterface()\l+ GetFrameSyncInterface()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_module_generator.html"];
+  Node4 -> Node3 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node4 [label="{xn::ModuleProductionNode\n||+ ~ModuleProductionNode()\l+ IsCapabilitySupported()\l+ SetIntProperty()\l+ SetRealProperty()\l+ SetStringProperty()\l+ SetGeneralProperty()\l+ GetIntProperty()\l+ GetRealProperty()\l+ GetStringProperty()\l+ GetGeneralProperty()\l+ GetExtendedSerializationInterface()\l+ GetLockAwareInterface()\l+ GetErrorStateInterface()\l+ GetGeneralIntInterface()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_module_production_node.html"];
+}

@@ -1,0 +1,132 @@
+make: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/Build'
+make -C ../NiAudioSample
+make -C ../NiUserTracker
+make -C ../NiSimpleViewer
+make -C ../NiUserSelection
+make -C ../NiBackRecorder
+make -C ../NiConvertXToONI
+make -C ../NiSimpleRead
+make -C ../NiRecordSynthetic
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiAudioSample'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/NiAudioSample.d x86-Release/NiAudioSample.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiAudioSample.o NiAudioSample.cpp
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiBackRecorder'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/main.d x86-Release/main.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/main.o main.cpp
+g++ -MD -MP -MT "./x86-Release/NiRecordSynthetic.d x86-Release/NiRecordSynthetic.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiRecordSynthetic.o NiRecordSynthetic.cpp
+g++ -MD -MP -MT "./x86-Release/main.d x86-Release/main.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/main.o main.cpp
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleViewer'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/NiSimpleViewer.d x86-Release/NiSimpleViewer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiSimpleViewer.o NiSimpleViewer.cpp
+g++ -MD -MP -MT "./x86-Release/NiConvertXToONI.d x86-Release/NiConvertXToONI.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiConvertXToONI.o NiConvertXToONI.cpp
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiUserSelection'
+mkdir -p x86-Release
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleRead'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/NiSimpleRead.d x86-Release/NiSimpleRead.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiSimpleRead.o NiSimpleRead.cpp
+g++ -MD -MP -MT "./x86-Release/ClosestUserSelector.d x86-Release/ClosestUserSelector.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/ClosestUserSelector.o ClosestUserSelector.cpp
+g++ -o ../Bin/x86-Release/Sample-NiSimpleRead ./x86-Release/NiSimpleRead.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+g++ -o ../Bin/x86-Release/Sample-NiRecordSynthetic ./x86-Release/NiRecordSynthetic.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+g++ -o ../Bin/x86-Release/Sample-NiConvertXToONI ./x86-Release/NiConvertXToONI.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+g++ -o ../Bin/x86-Release/Sample-NiAudioSample ./x86-Release/NiAudioSample.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+g++ -MD -MP -MT "./x86-Release/DefaultTrackingInitializer.d x86-Release/DefaultTrackingInitializer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/DefaultTrackingInitializer.o DefaultTrackingInitializer.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleRead'
+g++ -MD -MP -MT "./x86-Release/opengles.d x86-Release/opengles.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/opengles.o opengles.cpp
+g++ -MD -MP -MT "./x86-Release/ExitPoseDetector.d x86-Release/ExitPoseDetector.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/ExitPoseDetector.o ExitPoseDetector.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiRecordSynthetic'
+g++ -MD -MP -MT "./x86-Release/main.d x86-Release/main.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/main.o main.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiConvertXToONI'
+g++ -MD -MP -MT "./x86-Release/opengles.d x86-Release/opengles.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/opengles.o opengles.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiAudioSample'
+g++ -MD -MP -MT "./x86-Release/PoseToggleUserSelector.d x86-Release/PoseToggleUserSelector.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/PoseToggleUserSelector.o PoseToggleUserSelector.cpp
+g++ -o ../Bin/x86-Release/Sample-NiSimpleViewer ./x86-Release/NiSimpleViewer.o -L../../Lib -L../Bin/x86-Release -lglut -lOpenNI
+g++ -MD -MP -MT "./x86-Release/SceneDrawer.d x86-Release/SceneDrawer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/SceneDrawer.o SceneDrawer.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleViewer'
+make -C ../NiSimpleSkeleton
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleSkeleton'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/NiSimpleSkeleton.d x86-Release/NiSimpleSkeleton.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiSimpleSkeleton.o NiSimpleSkeleton.cpp
+g++ -o ../Bin/x86-Release/Sample-NiBackRecorder ./x86-Release/main.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiBackRecorder'
+make -C ../UserTracker.java
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/UserTracker.java'
+mkdir -p x86-Release
+javac -cp ../Bin/x86-Release/org.OpenNI.jar:/usr/share/java/org.OpenNI.jar -d x86-Release ./org/OpenNI/Samples/UserTracker/*.java
+g++ -MD -MP -MT "./x86-Release/PoseUserSelector.d x86-Release/PoseUserSelector.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/PoseUserSelector.o PoseUserSelector.cpp
+make -C ../NiViewer
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiViewer'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/Audio.d x86-Release/Audio.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Audio.o Audio.cpp
+make -C ../NiSampleModule
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSampleModule'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/ExportedSampleDepth.d x86-Release/ExportedSampleDepth.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -fPIC -fvisibility=hidden -o x86-Release/ExportedSampleDepth.o ExportedSampleDepth.cpp
+g++ -MD -MP -MT "./x86-Release/Capture.d x86-Release/Capture.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Capture.o Capture.cpp
+g++ -o ../Bin/x86-Release/Sample-NiSimpleSkeleton ./x86-Release/NiSimpleSkeleton.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+g++ -o ../Bin/x86-Release/Sample-NiUserTracker ./x86-Release/main.o ./x86-Release/opengles.o ./x86-Release/SceneDrawer.o -L../../Lib -L../Bin/x86-Release -lglut -lOpenNI
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleSkeleton'
+g++ -MD -MP -MT "./x86-Release/Device.d x86-Release/Device.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Device.o Device.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiUserTracker'
+g++ -MD -MP -MT "./x86-Release/Registration.d x86-Release/Registration.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -fPIC -fvisibility=hidden -o x86-Release/Registration.o Registration.cpp
+g++ -MD -MP -MT "./x86-Release/Draw.d x86-Release/Draw.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Draw.o Draw.cpp
+g++ -MD -MP -MT "./x86-Release/SampleManager.d x86-Release/SampleManager.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/SampleManager.o SampleManager.cpp
+g++ -MD -MP -MT "./x86-Release/Keyboard.d x86-Release/Keyboard.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Keyboard.o Keyboard.cpp
+g++ -MD -MP -MT "./x86-Release/SceneDrawer.d x86-Release/SceneDrawer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/SceneDrawer.o SceneDrawer.cpp
+g++ -MD -MP -MT "./x86-Release/Menu.d x86-Release/Menu.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Menu.o Menu.cpp
+g++ -MD -MP -MT "./x86-Release/SinglePoseUserSelector.d x86-Release/SinglePoseUserSelector.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/SinglePoseUserSelector.o SinglePoseUserSelector.cpp
+make -C ../SimpleRead.java
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/SimpleRead.java'
+mkdir -p x86-Release
+javac -cp ../Bin/x86-Release/org.OpenNI.jar:/usr/share/java/org.OpenNI.jar -d x86-Release ./org/OpenNI/Samples/SimpleRead/*.java
+( echo "Main-Class: org.OpenNI.Samples.UserTracker.UserTrackerApplication"; echo "Class-Path:  ../Bin/x86-Release/org.OpenNI.jar /usr/share/java/org.OpenNI.jar"; ) > Manifest.txt
+jar -cfm ../Bin/x86-Release/org.OpenNI.Samples.UserTracker.jar Manifest.txt -C x86-Release .
+g++ -MD -MP -MT "./x86-Release/TrackingInitializer.d x86-Release/TrackingInitializer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/TrackingInitializer.o TrackingInitializer.cpp
+g++ -MD -MP -MT "./x86-Release/UserSelector.d x86-Release/UserSelector.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/UserSelector.o UserSelector.cpp
+g++ -MD -MP -MT "./x86-Release/UserTracker.d x86-Release/UserTracker.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/UserTracker.o UserTracker.cpp
+echo java -jar org.OpenNI.Samples.UserTracker.jar > ../Bin/x86-Release/org.OpenNI.Samples.UserTracker; chmod +x ../Bin/x86-Release/org.OpenNI.Samples.UserTracker
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/UserTracker.java'
+make -C ../NiCRead
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiCRead'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/NiCRead.d x86-Release/NiCRead.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiCRead.o NiCRead.c
+g++ -o ../Bin/x86-Release/Sample-NiCRead ./x86-Release/NiCRead.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+g++ -MD -MP -MT "./x86-Release/MouseInput.d x86-Release/MouseInput.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/MouseInput.o MouseInput.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiCRead'
+make -C ../SimpleViewer.java
+g++ -MD -MP -MT "./x86-Release/NiViewer.d x86-Release/NiViewer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/NiViewer.o NiViewer.cpp
+g++ -MD -MP -MT "./x86-Release/Statistics.d x86-Release/Statistics.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/Statistics.o Statistics.cpp
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/SimpleViewer.java'
+mkdir -p x86-Release
+javac -cp ../Bin/x86-Release/org.OpenNI.jar:/usr/share/java/org.OpenNI.jar -d x86-Release ./org/OpenNI/Samples/SimpleViewer/*.java
+make -C ../NiSimpleCreate
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleCreate'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/NiSimpleCreate.d x86-Release/NiSimpleCreate.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -o x86-Release/NiSimpleCreate.o NiSimpleCreate.cpp
+make -C ../NiHandTracker
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiHandTracker'
+mkdir -p x86-Release
+g++ -MD -MP -MT "./x86-Release/main.d x86-Release/main.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/main.o main.cpp
+( echo "Main-Class: org.OpenNI.Samples.SimpleRead.SimpleRead"; echo "Class-Path:  ../Bin/x86-Release/org.OpenNI.jar /usr/share/java/org.OpenNI.jar"; ) > Manifest.txt
+jar -cfm ../Bin/x86-Release/org.OpenNI.Samples.SimpleRead.jar Manifest.txt -C x86-Release .
+g++ -o ../Bin/x86-Release/Sample-NiSimpleCreate ./x86-Release/NiSimpleCreate.o -L../../Lib -L../Bin/x86-Release -lOpenNI
+echo java -jar org.OpenNI.Samples.SimpleRead.jar > ../Bin/x86-Release/org.OpenNI.Samples.SimpleRead; chmod +x ../Bin/x86-Release/org.OpenNI.Samples.SimpleRead
+g++ -MD -MP -MT "./x86-Release/NiHandTracker.d x86-Release/NiHandTracker.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/NiHandTracker.o NiHandTracker.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/SimpleRead.java'
+g++ -MD -MP -MT "./x86-Release/SampleDepth.d x86-Release/SampleDepth.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni  -fPIC -fvisibility=hidden -o x86-Release/SampleDepth.o SampleDepth.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSimpleCreate'
+g++ -MD -MP -MT "./x86-Release/NiHandViewer.d x86-Release/NiHandViewer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/NiHandViewer.o NiHandViewer.cpp
+g++ -MD -MP -MT "./x86-Release/NiSimpleViewer.d x86-Release/NiSimpleViewer.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/NiSimpleViewer.o NiSimpleViewer.cpp
+g++ -o ../Bin/x86-Release/Sample-NiUserSelection ./x86-Release/ClosestUserSelector.o ./x86-Release/DefaultTrackingInitializer.o ./x86-Release/ExitPoseDetector.o ./x86-Release/main.o ./x86-Release/opengles.o ./x86-Release/PoseToggleUserSelector.o ./x86-Release/PoseUserSelector.o ./x86-Release/SampleManager.o ./x86-Release/SceneDrawer.o ./x86-Release/SinglePoseUserSelector.o ./x86-Release/TrackingInitializer.o ./x86-Release/UserSelector.o ./x86-Release/UserTracker.o -L../../Lib -L../Bin/x86-Release -lglut -lOpenNI
+g++ -MD -MP -MT "./x86-Release/NiTrailHistory.d x86-Release/NiTrailHistory.o" -c -msse3 -O2 -DNDEBUG -I../../Include -I/usr/include/ni -I./  -o x86-Release/NiTrailHistory.o NiTrailHistory.cpp
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiUserSelection'
+( echo "Main-Class: org.OpenNI.Samples.SimpleViewer.SimpleViewerApplication"; echo "Class-Path:  ../Bin/x86-Release/org.OpenNI.jar /usr/share/java/org.OpenNI.jar"; ) > Manifest.txt
+jar -cfm ../Bin/x86-Release/org.OpenNI.Samples.SimpleViewer.jar Manifest.txt -C x86-Release .
+echo java -jar org.OpenNI.Samples.SimpleViewer.jar > ../Bin/x86-Release/org.OpenNI.Samples.SimpleViewer; chmod +x ../Bin/x86-Release/org.OpenNI.Samples.SimpleViewer
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/SimpleViewer.java'
+g++ -o ../Bin/x86-Release/Sample-NiHandTracker ./x86-Release/main.o ./x86-Release/NiHandTracker.o ./x86-Release/NiHandViewer.o ./x86-Release/NiSimpleViewer.o ./x86-Release/NiTrailHistory.o -L../../Lib -L../Bin/x86-Release -lglut -lOpenNI
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiHandTracker'
+g++ -o ../Bin/x86-Release/NiViewer ./x86-Release/Audio.o ./x86-Release/Capture.o ./x86-Release/Device.o ./x86-Release/Draw.o ./x86-Release/Keyboard.o ./x86-Release/Menu.o ./x86-Release/MouseInput.o ./x86-Release/NiViewer.o ./x86-Release/Statistics.o -L../../Lib -L../Bin/x86-Release -lglut -lOpenNI
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiViewer'
+g++ -o ../Bin/x86-Release/libSample-NiSampleModule.so ./x86-Release/ExportedSampleDepth.o ./x86-Release/Registration.o ./x86-Release/SampleDepth.o -L../../Lib -L../Bin/x86-Release -lOpenNI -Wl,--no-undefined -shared
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/NiSampleModule'
+make: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x86-v1.5.2.23/Samples/Build'

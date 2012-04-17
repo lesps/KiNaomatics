@@ -1,0 +1,10 @@
+digraph G
+{
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  Node1 [label="{xn::HandTouchingFOVEdgeCapability\n||+ HandTouchingFOVEdgeCapability()\l+ HandTouchingFOVEdgeCapability()\l+ RegisterToHandTouchingFOVEdge()\l+ UnregisterFromHandTouchingFOVEdge()\l- HandTouchingFOVEdgeCB()\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node2 [label="{xn::Capability\n||+ Capability()\l+ Capability()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_capability.html"];
+  Node3 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node3 [label="{xn::NodeWrapper\n|- m_hNode\l- m_hShuttingDownCallback\l|+ NodeWrapper()\l+ NodeWrapper()\l+ operator=()\l+ ~NodeWrapper()\l+ operator XnNodeHandle()\l+ GetHandle()\l+ operator==()\l+ operator!=()\l+ IsValid()\l+ GetName()\l+ AddRef()\l+ Release()\l+ Ref()\l+ Unref()\l+ SetHandle()\l+ TakeOwnership()\l- ContextShuttingDownCallback()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_node_wrapper.html"];
+}

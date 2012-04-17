@@ -1,0 +1,21 @@
+# Let Primesense devices mount with world write permissions and proper owners and groups.
+# Additionally, you can change the mode to 0660 and make device users members of the video and audio group.
+# Put this file in /etc/udev/rules.d.
+
+# Primesense Devices
+SUBSYSTEM=="usb", ATTR{idProduct}=="0200", ATTR{idVendor}=="1d27", MODE:="0666", OWNER:="root", GROUP:="video"
+SUBSYSTEM=="usb", ATTR{idProduct}=="0300", ATTR{idVendor}=="1d27", MODE:="0666", OWNER:="root", GROUP:="video"
+SUBSYSTEM=="usb", ATTR{idProduct}=="0400", ATTR{idVendor}=="1d27", MODE:="0666", OWNER:="root", GROUP:="video"
+SUBSYSTEM=="usb", ATTR{idProduct}=="0500", ATTR{idVendor}=="1d27", MODE:="0666", OWNER:="root", GROUP:="video"
+SUBSYSTEM=="usb", ATTR{idProduct}=="0600", ATTR{idVendor}=="1d27", MODE:="0666", OWNER:="root", GROUP:="video"
+SUBSYSTEM=="usb", ATTR{idProduct}=="0601", ATTR{idVendor}=="1d27", MODE:="0666", OWNER:="root", GROUP:="video"
+
+# Kinect Video Device 
+SUBSYSTEM=="usb", ATTR{idProduct}=="02ae", ATTR{idVendor}=="045e", MODE:="0666", OWNER:="root", GROUP:="video"
+
+# Kinect Audio Device
+SUBSYSTEM=="usb", ATTR{idProduct}=="02ad", ATTR{idVendor}=="045e", MODE:="0666", OWNER:="root", GROUP:="audio"
+
+# Kinect Motor Device
+SUBSYSTEM=="usb", ATTR{idProduct}=="02b0", ATTR{idVendor}=="045e", MODE:="0666", OWNER:="root", GROUP:="video"
+

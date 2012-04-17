@@ -1,0 +1,10 @@
+digraph G
+{
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  Node1 [label="{xn::DepthMetaData\n|- m_depth\l- m_depthMap\l- m_writableDepthMap\l|+ DepthMetaData()\l+ InitFrom()\l+ InitFrom()\l+ CopyFrom()\l+ ReAdjust()\l+ ZRes()\l+ ZRes()\l+ Data()\l+ Data()\l+ WritableData()\l+ DepthMap()\l+ WritableDepthMap()\l+ operator[]()\l+ operator()()\l+ GetUnderlying()\l+ GetUnderlying()\l- DepthMetaData()\l- operator=()\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node2 [label="{xn::MapMetaData\n|- m_map\l|+ MapMetaData()\l+ XRes()\l+ XRes()\l+ YRes()\l+ YRes()\l+ XOffset()\l+ XOffset()\l+ YOffset()\l+ YOffset()\l+ FullXRes()\l+ FullXRes()\l+ FullYRes()\l+ FullYRes()\l+ FPS()\l+ FPS()\l+ PixelFormat()\l+ GetUnderlying()\l+ GetUnderlying()\l+ BytesPerPixel()\l+ AllocateData()\l+ ReAdjust()\l# PixelFormatImpl()\l- operator=()\l- MapMetaData()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_map_meta_data.html"];
+  Node3 -> Node2 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node3 [label="{xn::OutputMetaData\n|# m_pAllocatedData\l- m_output\l- m_ppData\l- m_nAllocatedSize\l|+ OutputMetaData()\l+ ~OutputMetaData()\l+ Timestamp()\l+ Timestamp()\l+ FrameID()\l+ FrameID()\l+ DataSize()\l+ DataSize()\l+ IsDataNew()\l+ IsDataNew()\l+ GetUnderlying()\l+ GetUnderlying()\l+ Data()\l+ Data()\l+ WritableData()\l+ AllocateData()\l+ Free()\l+ MakeDataWritable()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classxn_1_1_output_meta_data.html"];
+}

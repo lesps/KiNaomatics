@@ -1,0 +1,152 @@
+make: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build'
+make -C OpenNI clean
+make -C Modules/nimCodecs clean
+make -C Modules/nimMockNodes clean
+make -C Modules/nimRecorder clean
+make -C Utils/niReg clean
+make -C Utils/niLicense clean
+make -C Wrappers/OpenNI.jni clean
+make -C Wrappers/OpenNI.java clean
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Modules/nimMockNodes'
+rm -rf ../../../Bin/x86-Release/libnimMockNodes.so
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Modules/nimRecorder'
+rm -rf ../../../Bin/x86-Release/libnimRecorder.so
+rm -rf ./x86-Release/ExportedPlayer.o ./x86-Release/ExportedRecorder.o ./x86-Release/nimRecorder.o ./x86-Release/PlayerNode.o ./x86-Release/RecorderNode.o ./x86-Release/DataRecords.o
+rm -rf ./x86-Release/ExportedPlayer.d ./x86-Release/ExportedRecorder.d ./x86-Release/nimRecorder.d ./x86-Release/PlayerNode.d ./x86-Release/RecorderNode.d ./x86-Release/DataRecords.d
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Utils/niReg'
+rm -rf ../../../Bin/x86-Release/niReg
+rm -rf ./x86-Release/ExportedMockNodes.o ./x86-Release/MockAudioGenerator.o ./x86-Release/MockDepthGenerator.o ./x86-Release/MockDevice.o ./x86-Release/MockGenerator.o ./x86-Release/MockImageGenerator.o ./x86-Release/MockIRGenerator.o ./x86-Release/MockMapGenerator.o ./x86-Release/MockProductionNode.o ./x86-Release/nimMockNodes.o
+rm -rf ./x86-Release/niReg.o
+rm -rf ./x86-Release/ExportedMockNodes.d ./x86-Release/MockAudioGenerator.d ./x86-Release/MockDepthGenerator.d ./x86-Release/MockDevice.d ./x86-Release/MockGenerator.d ./x86-Release/MockImageGenerator.d ./x86-Release/MockIRGenerator.d ./x86-Release/MockMapGenerator.d ./x86-Release/MockProductionNode.d ./x86-Release/nimMockNodes.d
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Wrappers/OpenNI.java'
+rm -rf ../../../Bin/x86-Release/org.OpenNI.jar
+rm -rf ./x86-Release/niReg.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Modules/nimRecorder'
+make -C Samples/NiSimpleRead clean
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Modules/nimMockNodes'
+rm -rf 
+make -C Samples/NiBackRecorder clean
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Utils/niReg'
+rm -rf x86-Release
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Utils/niLicense'
+rm -rf ../../../Bin/x86-Release/niLicense
+make -C Samples/NiConvertXToONI clean
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Wrappers/OpenNI.jni'
+rm -rf ../../../Bin/x86-Release/libOpenNI.jni.so
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleRead'
+rm -rf ../../../Bin/x86-Release/Sample-NiSimpleRead
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Wrappers/OpenNI.java'
+make -C Samples/NiRecordSynthetic clean
+rm -rf ./x86-Release/niLicense.o
+rm -rf ./x86-Release/NiSimpleRead.o
+rm -rf ./x86-Release/NiSimpleRead.d
+rm -rf ./x86-Release/OpenNI.jni.o ./x86-Release/org_OpenNI_NativeMethods.o
+rm -rf ./x86-Release/niLicense.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleRead'
+make -C Samples/NiSampleModule clean
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiBackRecorder'
+rm -rf ../../../Bin/x86-Release/Sample-NiBackRecorder
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiConvertXToONI'
+rm -rf ../../../Bin/x86-Release/Sample-NiConvertXToONI
+rm -rf ./x86-Release/OpenNI.jni.d ./x86-Release/org_OpenNI_NativeMethods.d
+rm -rf ./x86-Release/main.o
+rm -rf ./x86-Release/NiConvertXToONI.o
+rm -rf ./x86-Release/main.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiBackRecorder'
+rm -rf ./x86-Release/NiConvertXToONI.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiConvertXToONI'
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Wrappers/OpenNI.jni'
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiRecordSynthetic'
+rm -rf ../../../Bin/x86-Release/Sample-NiRecordSynthetic
+make -C Samples/NiSimpleCreate clean
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Utils/niLicense'
+make -C Samples/NiCRead clean
+make -C Samples/NiAudioSample clean
+make -C Samples/NiSimpleSkeleton clean
+rm -rf ./x86-Release/NiRecordSynthetic.o
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiCRead'
+rm -rf ../../../Bin/x86-Release/Sample-NiCRead
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleCreate'
+rm -rf ../../../Bin/x86-Release/Sample-NiSimpleCreate
+rm -rf ./x86-Release/NiSimpleCreate.o
+rm -rf ./x86-Release/NiRecordSynthetic.d
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/OpenNI'
+rm -rf ../../Bin/x86-Release/libOpenNI.so
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiRecordSynthetic'
+make -C Samples/NiViewer clean
+rm -rf ./x86-Release/openNI.o ./x86-Release/XnBaseNode.o ./x86-Release/XnDump.o ./x86-Release/XnDumpFileWriter.o ./x86-Release/XnEnumerationErrors.o ./x86-Release/XnExportedNodes.o ./x86-Release/XnFPSCalculator.o ./x86-Release/XnLicensing.o ./x86-Release/XnLogConsoleWriter.o ./x86-Release/XnLog.o ./x86-Release/XnLogFileWriter.o ./x86-Release/XnMockNotifier.o ./x86-Release/XnModuleLoader.o ./x86-Release/XnNodeManager.o ./x86-Release/XnNodeWatcher.o ./x86-Release/XnOpenNI.o ./x86-Release/XnOS.o ./x86-Release/XnOSMemoryProfiling.o ./x86-Release/XnPlayerImpl.o ./x86-Release/XnProfiling.o ./x86-Release/XnQueries.o ./x86-Release/XnRecorderImpl.o ./x86-Release/XnScheduler.o ./x86-Release/XnStatusRegister.o ./x86-Release/XnTypeManager.o ./x86-Release/XnUSB.o ./x86-Release/XnUtils.o ./x86-Release/XnXml.o ./x86-Release/XnXmlScriptNode.o ./x86-Release/XnXmlScriptNodeExporter.o ./x86-Release/LinuxCriticalSections.o ./x86-Release/LinuxDebug.o ./x86-Release/LinuxEvents.o ./x86-Release/LinuxFiles.o ./x86-Release/LinuxINI.o ./x86-Release/LinuxKeyboard.o ./x86-Release/LinuxMemory.o ./x86-Release/LinuxMutex.o ./x86-Release/LinuxNetwork.o ./x86-Release/LinuxPosixEvents.o ./x86-Release/LinuxPosixNamedEvents.o ./x86-Release/LinuxProcesses.o ./x86-Release/LinuxSharedLibs.o ./x86-Release/LinuxSharedMemory.o ./x86-Release/LinuxStrings.o ./x86-Release/LinuxSysVNamedEvents.o ./x86-Release/LinuxThreads.o ./x86-Release/LinuxTime.o ./x86-Release/LinuxUSBDevice.o ./x86-Release/XnUSBLinux.o ./x86-Release/tinystr.o ./x86-Release/tinyxml.o ./x86-Release/tinyxmlerror.o ./x86-Release/tinyxmlparser.o
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiAudioSample'
+rm -rf ../../../Bin/x86-Release/Sample-NiAudioSample
+rm -rf ./x86-Release/NiCRead.o
+rm -rf ./x86-Release/NiSimpleCreate.d
+rm -rf ./x86-Release/NiCRead.d
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleSkeleton'
+rm -rf ../../../Bin/x86-Release/Sample-NiSimpleSkeleton
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleCreate'
+rm -rf ./x86-Release/openNI.d ./x86-Release/XnBaseNode.d ./x86-Release/XnDump.d ./x86-Release/XnDumpFileWriter.d ./x86-Release/XnEnumerationErrors.d ./x86-Release/XnExportedNodes.d ./x86-Release/XnFPSCalculator.d ./x86-Release/XnLicensing.d ./x86-Release/XnLogConsoleWriter.d ./x86-Release/XnLog.d ./x86-Release/XnLogFileWriter.d ./x86-Release/XnMockNotifier.d ./x86-Release/XnModuleLoader.d ./x86-Release/XnNodeManager.d ./x86-Release/XnNodeWatcher.d ./x86-Release/XnOpenNI.d ./x86-Release/XnOS.d ./x86-Release/XnOSMemoryProfiling.d ./x86-Release/XnPlayerImpl.d ./x86-Release/XnProfiling.d ./x86-Release/XnQueries.d ./x86-Release/XnRecorderImpl.d ./x86-Release/XnScheduler.d ./x86-Release/XnStatusRegister.d ./x86-Release/XnTypeManager.d ./x86-Release/XnUSB.d ./x86-Release/XnUtils.d ./x86-Release/XnXml.d ./x86-Release/XnXmlScriptNode.d ./x86-Release/XnXmlScriptNodeExporter.d ./x86-Release/LinuxCriticalSections.d ./x86-Release/LinuxDebug.d ./x86-Release/LinuxEvents.d ./x86-Release/LinuxFiles.d ./x86-Release/LinuxINI.d ./x86-Release/LinuxKeyboard.d ./x86-Release/LinuxMemory.d ./x86-Release/LinuxMutex.d ./x86-Release/LinuxNetwork.d ./x86-Release/LinuxPosixEvents.d ./x86-Release/LinuxPosixNamedEvents.d ./x86-Release/LinuxProcesses.d ./x86-Release/LinuxSharedLibs.d ./x86-Release/LinuxSharedMemory.d ./x86-Release/LinuxStrings.d ./x86-Release/LinuxSysVNamedEvents.d ./x86-Release/LinuxThreads.d ./x86-Release/LinuxTime.d ./x86-Release/LinuxUSBDevice.d ./x86-Release/XnUSBLinux.d ./x86-Release/tinystr.d ./x86-Release/tinyxml.d ./x86-Release/tinyxmlerror.d ./x86-Release/tinyxmlparser.d
+make -C Samples/NiSimpleViewer clean
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiCRead'
+rm -rf ./x86-Release/NiAudioSample.o
+rm -rf ./x86-Release/NiSimpleSkeleton.o
+make -C Samples/NiUserTracker clean
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/OpenNI'
+rm -rf ./x86-Release/NiSimpleSkeleton.d
+rm -rf ./x86-Release/NiAudioSample.d
+make -C Samples/NiUserSelection clean
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSampleModule'
+rm -rf ../../../Bin/x86-Release/libSample-NiSampleModule.so
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiAudioSample'
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleSkeleton'
+make -C Samples/NiHandTracker clean
+make -C Samples/SimpleRead.java clean
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Modules/nimCodecs'
+rm -rf ../../../Bin/x86-Release/libnimCodecs.so
+rm -rf ./x86-Release/ExportedSampleDepth.o ./x86-Release/Registration.o ./x86-Release/SampleDepth.o
+rm -rf ./x86-Release/ExportedCodec.o ./x86-Release/Xn16zCodec.o ./x86-Release/Xn16zEmbTablesCodec.o ./x86-Release/Xn8zCodec.o ./x86-Release/XnCodec.o ./x86-Release/XnCodecs.o ./x86-Release/XnJpegCodec.o ./x86-Release/XnStreamCompression.o ./x86-Release/XnUncompressedCodec.o ./x86-Release/jcapimin.o ./x86-Release/jcapistd.o ./x86-Release/jccoefct.o ./x86-Release/jccolor.o ./x86-Release/jcdctmgr.o ./x86-Release/jchuff.o ./x86-Release/jcinit.o ./x86-Release/jcmainct.o ./x86-Release/jcmarker.o ./x86-Release/jcmaster.o ./x86-Release/jcomapi.o ./x86-Release/jcparam.o ./x86-Release/jcphuff.o ./x86-Release/jcprepct.o ./x86-Release/jcsample.o ./x86-Release/jctrans.o ./x86-Release/jdapimin.o ./x86-Release/jdapistd.o ./x86-Release/jdatadst.o ./x86-Release/jdatasrc.o ./x86-Release/jdcoefct.o ./x86-Release/jdcolor.o ./x86-Release/jddctmgr.o ./x86-Release/jdhuff.o ./x86-Release/jdinput.o ./x86-Release/jdmainct.o ./x86-Release/jdmarker.o ./x86-Release/jdmaster.o ./x86-Release/jdmerge.o ./x86-Release/jdphuff.o ./x86-Release/jdpostct.o ./x86-Release/jdsample.o ./x86-Release/jdtrans.o ./x86-Release/jerror.o ./x86-Release/jfdctflt.o ./x86-Release/jfdctfst.o ./x86-Release/jfdctint.o ./x86-Release/jidctflt.o ./x86-Release/jidctfst.o ./x86-Release/jidctint.o ./x86-Release/jidctred.o ./x86-Release/jmemmgr.o ./x86-Release/jmemnobs.o ./x86-Release/jquant1.o ./x86-Release/jquant2.o ./x86-Release/jutils.o
+rm -rf ./x86-Release/ExportedSampleDepth.d ./x86-Release/Registration.d ./x86-Release/SampleDepth.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSampleModule'
+make -C Samples/SimpleViewer.java clean
+rm -rf ./x86-Release/ExportedCodec.d ./x86-Release/Xn16zCodec.d ./x86-Release/Xn16zEmbTablesCodec.d ./x86-Release/Xn8zCodec.d ./x86-Release/XnCodec.d ./x86-Release/XnCodecs.d ./x86-Release/XnJpegCodec.d ./x86-Release/XnStreamCompression.d ./x86-Release/XnUncompressedCodec.d ./x86-Release/jcapimin.d ./x86-Release/jcapistd.d ./x86-Release/jccoefct.d ./x86-Release/jccolor.d ./x86-Release/jcdctmgr.d ./x86-Release/jchuff.d ./x86-Release/jcinit.d ./x86-Release/jcmainct.d ./x86-Release/jcmarker.d ./x86-Release/jcmaster.d ./x86-Release/jcomapi.d ./x86-Release/jcparam.d ./x86-Release/jcphuff.d ./x86-Release/jcprepct.d ./x86-Release/jcsample.d ./x86-Release/jctrans.d ./x86-Release/jdapimin.d ./x86-Release/jdapistd.d ./x86-Release/jdatadst.d ./x86-Release/jdatasrc.d ./x86-Release/jdcoefct.d ./x86-Release/jdcolor.d ./x86-Release/jddctmgr.d ./x86-Release/jdhuff.d ./x86-Release/jdinput.d ./x86-Release/jdmainct.d ./x86-Release/jdmarker.d ./x86-Release/jdmaster.d ./x86-Release/jdmerge.d ./x86-Release/jdphuff.d ./x86-Release/jdpostct.d ./x86-Release/jdsample.d ./x86-Release/jdtrans.d ./x86-Release/jerror.d ./x86-Release/jfdctflt.d ./x86-Release/jfdctfst.d ./x86-Release/jfdctint.d ./x86-Release/jidctflt.d ./x86-Release/jidctfst.d ./x86-Release/jidctint.d ./x86-Release/jidctred.d ./x86-Release/jmemmgr.d ./x86-Release/jmemnobs.d ./x86-Release/jquant1.d ./x86-Release/jquant2.d ./x86-Release/jutils.d
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleViewer'
+rm -rf ../../../Bin/x86-Release/Sample-NiSimpleViewer
+rm -rf ./x86-Release/NiSimpleViewer.o
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Modules/nimCodecs'
+make -C Samples/UserTracker.java clean
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/SimpleRead.java'
+rm -rf ../../../Bin/x86-Release/org.OpenNI.Samples.SimpleRead.jar
+rm -rf ./x86-Release/NiSimpleViewer.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiSimpleViewer'
+rm -rf Manifest.txt
+rm -rf x86-Release
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/SimpleRead.java'
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/SimpleViewer.java'
+rm -rf ../../../Bin/x86-Release/org.OpenNI.Samples.SimpleViewer.jar
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiUserTracker'
+rm -rf ../../../Bin/x86-Release/Sample-NiUserTracker
+rm -rf Manifest.txt
+rm -rf ./x86-Release/main.o ./x86-Release/opengles.o ./x86-Release/SceneDrawer.o
+rm -rf ./x86-Release/main.d ./x86-Release/opengles.d ./x86-Release/SceneDrawer.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiUserTracker'
+rm -rf x86-Release
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/UserTracker.java'
+rm -rf ../../../Bin/x86-Release/org.OpenNI.Samples.UserTracker.jar
+rm -rf Manifest.txt
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/SimpleViewer.java'
+rm -rf x86-Release
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiViewer'
+rm -rf ../../../Bin/x86-Release/NiViewer
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/UserTracker.java'
+rm -rf ./x86-Release/Audio.o ./x86-Release/Capture.o ./x86-Release/Device.o ./x86-Release/Draw.o ./x86-Release/Keyboard.o ./x86-Release/Menu.o ./x86-Release/MouseInput.o ./x86-Release/NiViewer.o ./x86-Release/Statistics.o
+rm -rf ./x86-Release/Audio.d ./x86-Release/Capture.d ./x86-Release/Device.d ./x86-Release/Draw.d ./x86-Release/Keyboard.d ./x86-Release/Menu.d ./x86-Release/MouseInput.d ./x86-Release/NiViewer.d ./x86-Release/Statistics.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiViewer'
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiUserSelection'
+rm -rf ../../../Bin/x86-Release/Sample-NiUserSelection
+rm -rf ./x86-Release/ClosestUserSelector.o ./x86-Release/DefaultTrackingInitializer.o ./x86-Release/ExitPoseDetector.o ./x86-Release/main.o ./x86-Release/opengles.o ./x86-Release/PoseToggleUserSelector.o ./x86-Release/PoseUserSelector.o ./x86-Release/SampleManager.o ./x86-Release/SceneDrawer.o ./x86-Release/SinglePoseUserSelector.o ./x86-Release/TrackingInitializer.o ./x86-Release/UserSelector.o ./x86-Release/UserTracker.o
+rm -rf ./x86-Release/ClosestUserSelector.d ./x86-Release/DefaultTrackingInitializer.d ./x86-Release/ExitPoseDetector.d ./x86-Release/main.d ./x86-Release/opengles.d ./x86-Release/PoseToggleUserSelector.d ./x86-Release/PoseUserSelector.d ./x86-Release/SampleManager.d ./x86-Release/SceneDrawer.d ./x86-Release/SinglePoseUserSelector.d ./x86-Release/TrackingInitializer.d ./x86-Release/UserSelector.d ./x86-Release/UserTracker.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiUserSelection'
+make[1]: Entering directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiHandTracker'
+rm -rf ../../../Bin/x86-Release/Sample-NiHandTracker
+rm -rf ./x86-Release/main.o ./x86-Release/NiHandTracker.o ./x86-Release/NiHandViewer.o ./x86-Release/NiSimpleViewer.o ./x86-Release/NiTrailHistory.o
+rm -rf ./x86-Release/main.d ./x86-Release/NiHandTracker.d ./x86-Release/NiHandViewer.d ./x86-Release/NiSimpleViewer.d ./x86-Release/NiTrailHistory.d
+make[1]: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build/Samples/NiHandTracker'
+make: Leaving directory `/home/spencer/kinect/OpenNI/Platform/Linux/Build'
