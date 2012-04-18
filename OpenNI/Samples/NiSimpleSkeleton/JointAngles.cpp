@@ -3,6 +3,17 @@
 
 #define PI 3.14159265
 
+/**
+*Given a reference point and two additional points, find angle at
+*the reference point
+*@param x1 x coordinate of first point
+*@param y1 y coordinate of first point
+*@param x2 x coordinate of second point
+*@param y2 y coordinate of second point
+*@param offsetX X coordinate of the reference point
+*@param offsetY Y coordainte of the reference point
+*@return The angle at offset point due to points one and two.
+**/
 float findAngle(float x1, float y1, float x2, float y2, float offsetX, float offsetY) {
   float xa, ya, xb, yb, result; 
   xa = x1 - offsetX;
