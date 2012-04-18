@@ -16,6 +16,7 @@
 #include <assert.h>
 #include <vector>
 #include <stdint.h>
+#include <sstream>
 
 #define MDELAY 2
 #define TTL 16
@@ -54,13 +55,13 @@ static int PORT = 0;
 static std::deque<std::string> recvQueue;
 static int send_fd, recv_fd;
 
-static int init(char* ip, int port) {
+static int commInit(std::string ip, int port) {
 	IP = ip;
 	PORT = port;
  	return 1;
 }
 
-static int update() {
+static int commUpdate() {
   static sockaddr_in source_addr;
   static char data[MAX_LENGTH];
 
@@ -148,11 +149,12 @@ static int update() {
   return 1;
 }
 
-static int size() {
+static int commSize() {
   return recvQueue.size();
 }
 
-static std::string receive() {
+static std::string commReceive() {
+  commUpdate();
 
   //If empty, return 0 (check for this)
   if (recvQueue.empty()) {
@@ -164,7 +166,8 @@ static std::string receive() {
 }
 
 
-static int send(char* data) {
+static int commSend(char* data) {
+  commUpdate();
 	std::string header;
   std::string dataStr;
 	std::string contents(data);
@@ -173,7 +176,8 @@ static int send(char* data) {
   return send(send_fd, dataStr.c_str(), dataStr.size(), 0);
 }
 
-static int send(std::string data) {
+static int commSend(std::string data) {
+  commUpdate();
 	std::string header;
   std::string dataStr;
   header.push_back(11);
@@ -258,13 +262,7 @@ void XN_CALLBACK_TYPE UserCalibration_CalibrationComplete(xn::SkeletonCapability
     }
 }
 
-/**
-int serializeJoints(){
-  int i;
-  std::string = "";
 
-}
-**/
 
 float findAngle(XnSkeletonJointTransformation refJoint,
                 XnSkeletonJointTransformation joint1,
@@ -294,7 +292,9 @@ float findAngle(XnSkeletonJointTransformation refJoint,
   //Adjust for answers >pi or <-pi
   if(result < -180)
     result += 360;
-  
+  else if(result > 180)
+    result -= 360;
+
   return result;
 }
 
@@ -371,6 +371,7 @@ int getJoints(XnUserID user){
 
 int main(int argc, char **argv)
 {
+    commInit("192.168.1.255", 54321);
     XnStatus nRetVal = XN_STATUS_OK;
     xn::EnumerationErrors errors;
 
@@ -462,9 +463,25 @@ int main(int argc, char **argv)
                 continue;
 
             if(getJoints(aUsers[i])){
-              printf("Right Elbow Angle: %.2f\n", findAngle(jointArr[5],
-                      jointArr[3], jointArr[7], 0));
-
+              printf("Left Elbow: %.2f\nLeft Shoulder Roll: %.2f\nLeft Shoulder Pitch: %.2f\nHead Pitch: %.2f\n", 
+                  findAngle(jointArr[6], jointArr[4], jointArr[8], 0),
+                  findAngle(jointArr[4], jointArr[10], jointArr[6], 0),
+                  findAngle(jointArr[4], jointArr[10], jointArr[6], 1),
+                  findAngle(jointArr[2], jointArr[1], jointArr[0], 1)
+                  );
+              float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
+              float leftElbowAngle = findAngle(jointArr[6], jointArr[4], jointArr[8], 0);
+              float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
+              float leftShoulderPitch = findAngle(jointArr[4], jointArr[10], jointArr[6], 1);
+              float rightElbowAngle = findAngle(jointArr[5], jointArr[3], jointArr[7], 0);
+              float rightShoulderRoll = findAngle(jointArr[3], jointArr[9], jointArr[5], 0);
+              float rightShoulderPitch = findAngle(jointArr[3], jointArr[9], jointArr[5], 1);
+              std::ostringstream ostr;
+              ostr << "{"<<headAngle<<",{"<<leftShoulderPitch<<","<<leftShoulderRoll<<","<<
+                leftElbowAngle<<"},{"<<rightShoulderPitch<<","<<rightShoulderRoll<<","<<rightElbowAngle<<"},}";
+              std::string send = ostr.str();
+              std::cout<<send;
+              commSend(send);
             }
         }
         
