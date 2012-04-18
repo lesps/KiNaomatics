@@ -1,29 +1,26 @@
-/****************************************************************************
-*                                                                           *
-*  OpenNI 1.x Alpha                                                         *
-*  Copyright (C) 2011 PrimeSense Ltd.                                       *
-*                                                                           *
-*  This file is part of OpenNI.                                             *
-*                                                                           *
-*  OpenNI is free software: you can redistribute it and/or modify           *
-*  it under the terms of the GNU Lesser General Public License as published *
-*  by the Free Software Foundation, either version 3 of the License, or     *
-*  (at your option) any later version.                                      *
-*                                                                           *
-*  OpenNI is distributed in the hope that it will be useful,                *
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of           *
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the             *
-*  GNU Lesser General Public License for more details.                      *
-*                                                                           *
-*  You should have received a copy of the GNU Lesser General Public License *
-*  along with OpenNI. If not, see <http://www.gnu.org/licenses/>.           *
-*                                                                           *
-****************************************************************************/
-//---------------------------------------------------------------------------
-// Includes
-//---------------------------------------------------------------------------
 #include <XnCppWrapper.h>
 #include <string>
+#include "string.h"
+#include <math.h>
+#include <iostream>
+#include <deque>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <assert.h>
+#include <vector>
+#include <stdint.h>
+
+#define MDELAY 2
+#define TTL 16
+#define MAX_LENGTH 160000 //Size for sending 640*480 yuyv data without resampling
+
 
 //---------------------------------------------------------------------------
 // Defines
@@ -31,6 +28,11 @@
 #define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"
 #define SAMPLE_XML_PATH_LOCAL "SamplesConfig.xml"
 #define JOINT_ARR_SIZE 11
+#define MAX_NUM_USERS 15
+#define PI 3.14159265
+#define MDELAY 2
+#define TTL 16
+#define MAX_LENGTH 160000 //Size for sending 640*480 yuyv data without resampling
 
 //---------------------------------------------------------------------------
 // Globals
@@ -45,10 +47,139 @@ XnChar g_strPose[20] = "";
 
 XnSkeletonJointTransformation jointArr[JOINT_ARR_SIZE];
 
-#define MAX_NUM_USERS 15
-//---------------------------------------------------------------------------
-// Code
-//---------------------------------------------------------------------------
+const int maxQueueSize = 12;
+static std::string IP;
+static int PORT = 0;
+
+static std::deque<std::string> recvQueue;
+static int send_fd, recv_fd;
+
+static int init(char* ip, int port) {
+	IP = ip;
+	PORT = port;
+ 	return 1;
+}
+
+static int update() {
+  static sockaddr_in source_addr;
+  static char data[MAX_LENGTH];
+
+	// Check whether initiated
+  assert(IP.empty()!=1);	
+
+	// Check port
+	assert(PORT!=0);
+
+  static bool init = false;
+  if (!init) {
+    struct hostent *hostptr = gethostbyname(IP.c_str());
+    if (hostptr == NULL) {
+      printf("Could not get hostname\n");
+      return -1;
+    }
+
+    send_fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (send_fd < 0) {
+      printf("Could not open datagram send socket\n");
+      return -1;
+    }
+
+    int i = 1;
+    if (setsockopt(send_fd, SOL_SOCKET, SO_BROADCAST, (const char *) &i, sizeof(i)) < 0) {
+      printf("Could not set broadcast option\n");
+      return -1;
+    }
+      
+    struct sockaddr_in dest_addr;
+    bzero((char *) &dest_addr, sizeof(dest_addr));
+    dest_addr.sin_family = AF_INET;
+    bcopy(hostptr->h_addr, (char *) &dest_addr.sin_addr, hostptr->h_length);
+    dest_addr.sin_port = htons(PORT);
+
+    if (connect(send_fd, (struct sockaddr *) &dest_addr, sizeof(dest_addr)) < 0) {
+      printf("Could not connect to destination address\n");
+      return -1;
+    }
+
+    recv_fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (recv_fd < 0) {
+      printf("Could not open datagram recv socket\n");
+      return -1;
+    }
+
+    struct sockaddr_in local_addr;
+    bzero((char *) &local_addr, sizeof(local_addr));
+    local_addr.sin_family = AF_INET;
+    local_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    local_addr.sin_port = htons(PORT);
+    if (bind(recv_fd, (struct sockaddr *) &local_addr, sizeof(local_addr)) < 0) {
+      printf("Could not bind to port\n");
+      return -1;
+    }
+
+    // Nonblocking receive:
+    int flags  = fcntl(recv_fd, F_GETFL, 0);
+    if (flags == -1) 
+      flags = 0;
+    if (fcntl(recv_fd, F_SETFL, flags | O_NONBLOCK) < 0) {
+      printf("Could not set nonblocking mode\n");
+      return -1;
+    }
+
+    // TODO: set at exit
+    init = true;
+  }
+
+  // Process incoming messages:
+  socklen_t source_addr_len = sizeof(source_addr);
+  int len = recvfrom(recv_fd, data, MAX_LENGTH, 0, (struct sockaddr *) &source_addr, &source_addr_len);
+  while (len > 0) {
+    std::string msg((const char *) data, len);
+    recvQueue.push_back(msg);
+
+    len = recvfrom(recv_fd, data, MAX_LENGTH, 0, (struct sockaddr *) &source_addr, &source_addr_len);
+  }
+
+  // Remove older messages:
+  while (recvQueue.size() > maxQueueSize) {
+    recvQueue.pop_front();
+  }
+
+  return 1;
+}
+
+static int size() {
+  return recvQueue.size();
+}
+
+static std::string receive() {
+
+  //If empty, return 0 (check for this)
+  if (recvQueue.empty()) {
+    return 0;
+  }
+
+  recvQueue.pop_front();
+  return recvQueue.front();
+}
+
+
+static int send(char* data) {
+	std::string header;
+  std::string dataStr;
+	std::string contents(data);
+  header.push_back(11);
+	dataStr = header + contents;
+  return send(send_fd, dataStr.c_str(), dataStr.size(), 0);
+}
+
+static int send(std::string data) {
+	std::string header;
+  std::string dataStr;
+  header.push_back(11);
+	dataStr = header + data;
+  return send(send_fd, dataStr.c_str(), dataStr.size(), 0);
+}
 
 XnBool fileExists(const char *fn)
 {
@@ -127,11 +258,44 @@ void XN_CALLBACK_TYPE UserCalibration_CalibrationComplete(xn::SkeletonCapability
     }
 }
 
-
+/**
 int serializeJoints(){
   int i;
-  string = "";
+  std::string = "";
 
+}
+**/
+
+float findAngle(XnSkeletonJointTransformation refJoint,
+                XnSkeletonJointTransformation joint1,
+                XnSkeletonJointTransformation joint2,
+                int plane) {
+  float pX, pY, pZ, qX, qY, qZ, offsetX, offsetY, offsetZ, result; 
+  
+  //Get coordinates of the point of reference
+  offsetX = refJoint.position.position.X;
+  offsetY = refJoint.position.position.Y;
+  offsetZ = refJoint.position.position.Z;
+  
+  //Transform the origin of the coordinate axis
+  pX = joint1.position.position.X - offsetX;
+  pY = joint1.position.position.Y - offsetY;
+  pZ = joint1.position.position.Z - offsetZ;
+  qX = joint2.position.position.X - offsetX;
+  qY = joint2.position.position.Y - offsetY;
+  qZ = joint2.position.position.Z - offsetZ;
+  
+  //Calculate the angle in the given plane
+  if(plane==0)
+    result = (atan2(qY,qX) - atan2(pY,pX)) * 180/PI;
+  else
+    result = (atan2(qZ,qY) - atan2(pZ,pY)) * 180/PI;
+
+  //Adjust for answers >pi or <-pi
+  if(result < -180)
+    result += 360;
+  
+  return result;
 }
 
 int getJoints(XnUserID user){
@@ -297,9 +461,11 @@ int main(int argc, char **argv)
             if(g_UserGenerator.GetSkeletonCap().IsTracking(aUsers[i])==FALSE)
                 continue;
 
-            if(getJoints(aUsers[i]))
-              for(j = 0; j < JOINT_ARR_SIZE; j++)
-                printf("Joint %d: %.3f\n", j, jointArr[j].position.position.X);
+            if(getJoints(aUsers[i])){
+              printf("Right Elbow Angle: %.2f\n", findAngle(jointArr[5],
+                      jointArr[3], jointArr[7], 0));
+
+            }
         }
         
     }
