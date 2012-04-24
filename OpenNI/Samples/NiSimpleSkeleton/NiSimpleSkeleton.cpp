@@ -17,6 +17,7 @@
 #include <vector>
 #include <stdint.h>
 #include <sstream>
+#include <unistd.h>
 
 #define MDELAY 2
 #define TTL 16
@@ -29,7 +30,7 @@
 #define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"
 #define SAMPLE_XML_PATH_LOCAL "SamplesConfig.xml"
 #define JOINT_ARR_SIZE 11
-#define MAX_NUM_USERS 15
+#define MAX_NUM_USERS 1
 #define PI 3.14159265
 #define MDELAY 2
 #define TTL 16
@@ -38,6 +39,9 @@
 //---------------------------------------------------------------------------
 // Globals
 //---------------------------------------------------------------------------
+
+using namespace std;
+
 xn::Context g_Context;
 xn::ScriptNode g_scriptNode;
 xn::DepthGenerator g_DepthGenerator;
@@ -49,13 +53,13 @@ XnChar g_strPose[20] = "";
 XnSkeletonJointTransformation jointArr[JOINT_ARR_SIZE];
 
 const int maxQueueSize = 12;
-static std::string IP;
+static string IP;
 static int PORT = 0;
 
-static std::deque<std::string> recvQueue;
+static deque<string> recvQueue;
 static int send_fd, recv_fd;
 
-static int commInit(std::string ip, int port) {
+static int commInit(string ip, int port) {
 	IP = ip;
 	PORT = port;
  	return 1;
@@ -135,7 +139,7 @@ static int commUpdate() {
   socklen_t source_addr_len = sizeof(source_addr);
   int len = recvfrom(recv_fd, data, MAX_LENGTH, 0, (struct sockaddr *) &source_addr, &source_addr_len);
   while (len > 0) {
-    std::string msg((const char *) data, len);
+    string msg((const char *) data, len);
     recvQueue.push_back(msg);
 
     len = recvfrom(recv_fd, data, MAX_LENGTH, 0, (struct sockaddr *) &source_addr, &source_addr_len);
@@ -153,7 +157,7 @@ static int commSize() {
   return recvQueue.size();
 }
 
-static std::string commReceive() {
+static string commReceive() {
   commUpdate();
 
   //If empty, return 0 (check for this)
@@ -168,18 +172,18 @@ static std::string commReceive() {
 
 static int commSend(char* data) {
   commUpdate();
-	std::string header;
-  std::string dataStr;
-	std::string contents(data);
+	string header;
+  string dataStr;
+	string contents(data);
   header.push_back(11);
 	dataStr = header + contents;
   return send(send_fd, dataStr.c_str(), dataStr.size(), 0);
 }
 
-static int commSend(std::string data) {
+static int commSend(string data) {
   commUpdate();
-	std::string header;
-  std::string dataStr;
+	string header;
+  string dataStr;
   header.push_back(11);
 	dataStr = header + data;
   return send(send_fd, dataStr.c_str(), dataStr.size(), 0);
@@ -369,6 +373,21 @@ int getJoints(XnUserID user){
     return nRetVal;						    \
 }
 
+void printRotation(XnUserID user){
+  XnSkeletonJointTransformation joint;
+  int i;
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_HEAD,joint); 
+  XnSkeletonJointOrientation orientation = joint.orientation;
+  if(orientation.fConfidence > .8){
+    for(i =0; i < 9; ++i){
+      if(i%3==0)
+        printf("\n");
+      printf("%.3f\t",orientation.orientation.elements[i]);
+    }
+    printf("\n\n\n\n");
+  }
+}
+
 int main(int argc, char **argv)
 {
     commInit("192.168.1.255", 54321);
@@ -463,12 +482,14 @@ int main(int argc, char **argv)
                 continue;
 
             if(getJoints(aUsers[i])){
+              /**
               printf("Left Elbow: %.2f\nLeft Shoulder Roll: %.2f\nLeft Shoulder Pitch: %.2f\nHead Pitch: %.2f\n", 
                   findAngle(jointArr[6], jointArr[4], jointArr[8], 0),
                   findAngle(jointArr[4], jointArr[10], jointArr[6], 0),
                   findAngle(jointArr[4], jointArr[10], jointArr[6], 1),
                   findAngle(jointArr[2], jointArr[1], jointArr[0], 1)
                   );
+              **/
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowAngle = findAngle(jointArr[6], jointArr[4], jointArr[8], 0);
               float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
@@ -476,12 +497,14 @@ int main(int argc, char **argv)
               float rightElbowAngle = findAngle(jointArr[5], jointArr[3], jointArr[7], 0);
               float rightShoulderRoll = findAngle(jointArr[3], jointArr[9], jointArr[5], 0);
               float rightShoulderPitch = findAngle(jointArr[3], jointArr[9], jointArr[5], 1);
-              std::ostringstream ostr;
+              ostringstream ostr;
               ostr << "{"<<headAngle<<",{"<<leftShoulderPitch<<","<<leftShoulderRoll<<","<<
                 leftElbowAngle<<"},{"<<rightShoulderPitch<<","<<rightShoulderRoll<<","<<rightElbowAngle<<"},}";
-              std::string send = ostr.str();
-              std::cout<<send;
+              string send = ostr.str();
+              //cout<<send;
+              //printRotation(aUsers[i]);
               commSend(send);
+              usleep(200000);             
             }
         }
         
