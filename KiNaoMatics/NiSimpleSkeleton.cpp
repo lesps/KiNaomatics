@@ -29,7 +29,7 @@
 //---------------------------------------------------------------------------
 #define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"
 #define SAMPLE_XML_PATH_LOCAL "SamplesConfig.xml"
-#define JOINT_ARR_SIZE 11
+#define JOINT_ARR_SIZE 15
 #define MAX_NUM_USERS 1
 #define PI 3.14159265
 #define MDELAY 2
@@ -218,6 +218,8 @@ void XN_CALLBACK_TYPE User_LostUser(xn::UserGenerator& generator, XnUserID nId, 
     XnUInt32 epochTime = 0;
     xnOSGetEpochTime(&epochTime);
     printf("%d Lost user %d\n", epochTime, nId);	
+    string s = "{[\"tracking\"]=false}";
+    commSend(s);
 }
 // Callback: Detected a pose
 void XN_CALLBACK_TYPE UserPose_PoseDetected(xn::PoseDetectionCapability& capability, const XnChar* strPose, XnUserID nId, void* pCookie)
@@ -266,8 +268,6 @@ void XN_CALLBACK_TYPE UserCalibration_CalibrationComplete(xn::SkeletonCapability
     }
 }
 
-
-
 float findAngle(XnSkeletonJointTransformation refJoint,
                 XnSkeletonJointTransformation joint1,
                 XnSkeletonJointTransformation joint2,
@@ -289,9 +289,9 @@ float findAngle(XnSkeletonJointTransformation refJoint,
   
   //Calculate the angle in the given plane
   if(plane==0)
-    result = (atan2(qY,qX) - atan2(pY,pX)) * 180/PI;
+    result = (atan2(pY,pX) - atan2(qY,qX)) * 180/PI;
   else
-    result = (atan2(qZ,qY) - atan2(pZ,pY)) * 180/PI;
+    result = (atan2(pZ,pY) - atan2(qZ,qY)) * 180/PI;
 
   //Adjust for answers >pi or <-pi
   if(result < -180)
@@ -362,6 +362,27 @@ int getJoints(XnUserID user){
     jointArr[10] = joint;
   } else return 0;
 
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_KNEE,joint);
+  if(joint.position.fConfidence > .8){
+    jointArr[11] = joint;
+  } else return 0;
+
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_KNEE,joint);
+  if(joint.position.fConfidence > .8){
+    jointArr[12] = joint;
+  } else return 0;
+
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_FOOT,joint);
+  if(joint.position.fConfidence > .8){
+    jointArr[13] = joint;
+  } else return 0;
+
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_FOOT,joint);
+  if(joint.position.fConfidence > .8){
+    jointArr[14] = joint;
+  } else return 0;
+
+
   //The function succeeded
   return 1;
 }
@@ -390,7 +411,7 @@ void printRotation(XnUserID user){
 
 int main(int argc, char **argv)
 {
-    commInit("192.168.1.255", 54321);
+    commInit("96.69.123.255", 54321);
     XnStatus nRetVal = XN_STATUS_OK;
     xn::EnumerationErrors errors;
 
@@ -468,6 +489,9 @@ int main(int argc, char **argv)
         printf("Assume calibration pose\n");
     }
     XnUInt32 epochTime = 0;
+    XnSkeletonJointTransformation lHand;
+    XnSkeletonJointTransformation rHand;
+    bool firstRun = true;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
@@ -475,29 +499,41 @@ int main(int argc, char **argv)
         nUsers=MAX_NUM_USERS;
         g_UserGenerator.GetUsers(aUsers, nUsers);
         int numTracked=0;
-        int userToPrint=-1;
+        int userToPrint=-1; 
         for(XnUInt16 i=0; i<nUsers; i++)
         {
             ostringstream ostr;
             if(g_UserGenerator.GetSkeletonCap().IsTracking(aUsers[i])==FALSE)
               continue;
-            ostr<<"{[\"tracking\"]=true},";
+            ostr<<"{[\"tracking\"]=true,";
 
             if(getJoints(aUsers[i])){
+              if(firstRun){
+                lHand = jointArr[8];
+                rHand = jointArr[7];
+                firstRun=false;
+              }
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
-              float leftElbowAngle = findAngle(jointArr[6], jointArr[4], jointArr[8], 0);
+              float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
               float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
               float leftShoulderPitch = findAngle(jointArr[4], jointArr[10], jointArr[6], 1);
-              float rightElbowAngle = findAngle(jointArr[5], jointArr[3], jointArr[7], 0);
+              float rightElbowPitch = findAngle(jointArr[5], jointArr[7], jointArr[3], 0);
               float rightShoulderRoll = findAngle(jointArr[3], jointArr[9], jointArr[5], 0);
               float rightShoulderPitch = findAngle(jointArr[3], jointArr[9], jointArr[5], 1);
-              ostr << headAngle*PI/180<<",{"<<leftShoulderPitch*PI/180<<","<<leftShoulderRoll*PI/180<<","<<
-                leftElbowAngle*PI/180<<"},{"<<rightShoulderPitch*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowAngle*PI/180<<"},}";
+              float rightElbowRoll = findAngle(jointArr[5], jointArr[7], rHand, 1);
+              float leftElbowRoll = findAngle(jointArr[6], jointArr[8], lHand, 1);
+              printf("\nRight Knee Z: %.2f", jointArr[11].position.position.Z);
+              printf("\nRight Hip Z: %.2f", jointArr[9].position.position.Z);
+              ostr << "{nil,nil},{"<<leftShoulderPitch*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
+                leftElbowPitch*PI/180<<"},{"<<rightShoulderPitch*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
+                ","<<rightElbowPitch*PI/180<<"},}";
               string send = ostr.str();
               cout<<send<<"\n";
               //printRotation(aUsers[i]);
               commSend(send);
-              usleep(200000);             
+              lHand = jointArr[8];
+              rHand = jointArr[7];
+              usleep(50000);             
             }
         }
         
