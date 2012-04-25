@@ -372,6 +372,7 @@ int getJoints(XnUserID user){
     jointArr[12] = joint;
   } else return 0;
 
+  /**
   g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_FOOT,joint);
   if(joint.position.fConfidence > .8){
     jointArr[13] = joint;
@@ -382,6 +383,7 @@ int getJoints(XnUserID user){
     jointArr[14] = joint;
   } else return 0;
 
+  **/
 
   //The function succeeded
   return 1;
@@ -492,6 +494,7 @@ int main(int argc, char **argv)
     XnSkeletonJointTransformation lHand;
     XnSkeletonJointTransformation rHand;
     bool firstRun = true;
+    double zHome;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
@@ -512,7 +515,16 @@ int main(int argc, char **argv)
                 lHand = jointArr[8];
                 rHand = jointArr[7];
                 firstRun=false;
+                zHome = jointArr[0].position.position.Z;
               }
+              double z = jointArr[0].position.position.Z;
+              double vx = 0;
+              if(z-zHome < -500)
+                vx = 0.2;
+              else if(z-zHome > 500)
+                vx = -0.2;
+              else
+                vx = 0;
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
               float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
@@ -526,7 +538,7 @@ int main(int argc, char **argv)
               printf("\nRight Hip Z: %.2f", jointArr[9].position.position.Z);
               ostr << "{nil,nil},{"<<leftShoulderPitch*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
                 leftElbowPitch*PI/180<<"},{"<<rightShoulderPitch*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
-                ","<<rightElbowPitch*PI/180<<"},}";
+                ","<<rightElbowPitch*PI/180<<"},{"<<vx<<",0,0},}";
               string send = ostr.str();
               cout<<send<<"\n";
               //printRotation(aUsers[i]);
