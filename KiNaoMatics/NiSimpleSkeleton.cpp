@@ -519,9 +519,9 @@ int main(int argc, char **argv)
               }
               double z = jointArr[0].position.position.Z;
               double vx = 0;
-              if(z-zHome < -500)
+              if(z-zHome < -300)
                 vx = 0.2;
-              else if(z-zHome > 500)
+              else if(z-zHome > 300)
                 vx = -0.2;
               else
                 vx = 0;
