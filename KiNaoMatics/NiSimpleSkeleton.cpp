@@ -548,6 +548,8 @@ int main(int argc, char **argv)
                 kick = true;
               else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 150)
                 kick = true;
+              else
+                kick=false;
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
               float lElbowPitchConv = (-1)*leftElbowPitch - 90;
