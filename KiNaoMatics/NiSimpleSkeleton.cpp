@@ -544,9 +544,9 @@ int main(int argc, char **argv)
               else if(x-xHome > 300)
                 vy= -.01;
 
-              if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 150)
+              if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 350)
                 kick = true;
-              else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 150)
+              else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 350)
                 kick = true;
               else
                 kick=false;
@@ -555,12 +555,12 @@ int main(int argc, char **argv)
               float lElbowPitchConv = abs(leftElbowPitch) - 180;
               float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
               float leftShoulderPitch = findAngle(jointArr[4], jointArr[10], jointArr[6], 1);
-              float lShoulderPitchConv = leftShoulderPitch - 90;
+              float lShoulderPitchConv = (leftShoulderPitch + 90);
               float rightElbowPitch = findAngle(jointArr[5], jointArr[7], jointArr[3], 0);
-              float rElbowPitchConv = 180 - rightElbowPitch;
+              float rElbowPitchConv = 180 - abs(rightElbowPitch);
               float rightShoulderRoll = findAngle(jointArr[3], jointArr[9], jointArr[5], 0);
               float rightShoulderPitch = findAngle(jointArr[3], jointArr[9], jointArr[5], 1);
-              float rShoulderPitchConv = rightShoulderPitch - 90;
+              float rShoulderPitchConv = rightShoulderPitch + 90;
               float rightElbowRoll = findAngle(jointArr[5], jointArr[7], rHand, 1);
               float leftElbowRoll = findAngle(jointArr[6], jointArr[8], lHand, 1);
               
@@ -576,6 +576,8 @@ int main(int argc, char **argv)
               if (lShoulderPitchConv < -360/PI)
                 lShoulderPitchConv = -360/PI;
 
+              printf("\nlShoulder: %6f, Corrected: %6f", leftShoulderPitch, lShoulderPitchConv);
+              
               if (rElbowPitchConv > 90)
                 rElbowPitchConv = 90;
               if (rElbowPitchConv < 0)
@@ -588,21 +590,27 @@ int main(int argc, char **argv)
               if (rShoulderPitchConv < -360/PI)
                 rShoulderPitchConv = -360/PI;
 
-              //if (rightShoulderRoll > 0)
-                //rightShoulderRoll = 0;
-              //if (rightShoulderRoll < -PI/2)
-                //rightShoulderRoll = -PI/2;
+              printf("\nrShoulder: %6f, Corrected: %6f", rightShoulderPitch, rShoulderPitchConv);
 
-              //if (leftShoulderRoll > PI/2)
-                //leftShoulderRoll = PI/2;
-              //if (leftShoulderRoll < 0)
-                //leftShoulderRoll = 0;
+              if (rightShoulderRoll > 0)
+                rightShoulderRoll = 0;
+              if (rightShoulderRoll < -90)
+                rightShoulderRoll = -90;
               
+              printf("\nrRoll: %6f", rightShoulderRoll);
+
+              if (leftShoulderRoll > 90)
+                leftShoulderRoll = 90;
+              if (leftShoulderRoll < 0)
+                leftShoulderRoll = 0;
+              
+              printf("\nlRoll: %6f", leftShoulderRoll);
+             
               ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
                 lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
                 ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
               string send = ostr.str();
-              cout<<send<<"\n";
+              cout<<"\n"<<send<<"\n";
               //printRotation(aUsers[i]);
               commSend(send);
               lHand = jointArr[8];
