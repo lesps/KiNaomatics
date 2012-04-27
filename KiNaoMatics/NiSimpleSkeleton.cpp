@@ -399,7 +399,7 @@ int getJoints(XnUserID user){
 void printRotation(XnUserID user){
   XnSkeletonJointTransformation joint;
   int i;
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_HEAD,joint); 
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_TORSO,joint); 
   XnSkeletonJointOrientation orientation = joint.orientation;
   if(orientation.fConfidence > .8){
     for(i =0; i < 9; ++i){
@@ -496,6 +496,7 @@ int main(int argc, char **argv)
     bool firstRun = true;
     double zHome;
     double xHome;
+    double torsOrient;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
@@ -518,11 +519,13 @@ int main(int argc, char **argv)
                 firstRun=false;
                 zHome = jointArr[0].position.position.Z;
                 xHome = jointArr[0].position.position.X;
+                torsOrient = jointArr[0].orientation.orientation.elements[6];
               }
               double z = jointArr[0].position.position.Z;
               double x = jointArr[0].position.position.X; 
               double vx = 0;
               double vy = 0;
+              double vz = 0;
               bool kick = false;
               if(z-zHome < -500)
                 vx = 0.04;
@@ -543,6 +546,8 @@ int main(int argc, char **argv)
                 vy = -.02;
               else if(x-xHome > 300)
                 vy= -.01;
+              else
+                vy = 0;
 
               if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 350)
                 kick = true;
@@ -550,6 +555,14 @@ int main(int argc, char **argv)
                 kick = true;
               else
                 kick=false;
+              
+              if(torsOrient > 0.2)
+                vz = 0.15;
+              else if(torsOrient < -0.2)
+                vz = -0.15;
+              else
+                vz = 0;
+
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
               float lElbowPitchConv = abs(leftElbowPitch) - 180;
@@ -608,10 +621,10 @@ int main(int argc, char **argv)
              
               ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
                 lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
-                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
+                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<","<<vz<<"},}";
               string send = ostr.str();
               cout<<"\n"<<send<<"\n";
-              //printRotation(aUsers[i]);
+              printRotation(aUsers[i]);
               commSend(send);
               lHand = jointArr[8];
               rHand = jointArr[7];
