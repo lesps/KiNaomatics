@@ -30,7 +30,7 @@
 #define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"
 #define SAMPLE_XML_PATH_LOCAL "SamplesConfig.xml"
 #define JOINT_ARR_SIZE 15
-#define MAX_NUM_USERS 1
+#define MAX_NUM_USERS 2
 #define PI 3.14159265
 #define MDELAY 2
 #define TTL 16
