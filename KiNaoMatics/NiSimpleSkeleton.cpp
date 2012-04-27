@@ -523,6 +523,7 @@ int main(int argc, char **argv)
               double x = jointArr[0].position.position.X; 
               double vx = 0;
               double vy = 0;
+              bool kick = false;
               if(z-zHome < -500)
                 vx = 0.04;
               else if(z-zHome < -300)
@@ -542,6 +543,11 @@ int main(int argc, char **argv)
                 vy = -.02;
               else if(x-xHome > 300)
                 vy= -.01;
+
+              if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 150)
+                kick = true;
+              else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 150)
+                kick = true;
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
               float lElbowPitchConv = (-1)*leftElbowPitch - 90;
@@ -586,7 +592,7 @@ int main(int argc, char **argv)
               //if (leftShoulderRoll < 0)
                 //leftShoulderRoll = 0;
               
-              ostr << "[\"number\"]="<<i<<",{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
+              ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
                 lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
                 ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
               string send = ostr.str();
