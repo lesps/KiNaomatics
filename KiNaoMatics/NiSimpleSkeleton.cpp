@@ -495,6 +495,7 @@ int main(int argc, char **argv)
     XnSkeletonJointTransformation rHand;
     bool firstRun = true;
     double zHome;
+    double xHome;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
@@ -516,15 +517,31 @@ int main(int argc, char **argv)
                 rHand = jointArr[7];
                 firstRun=false;
                 zHome = jointArr[0].position.position.Z;
+                xHome = jointArr[0].position.position.X;
               }
               double z = jointArr[0].position.position.Z;
+              double x = jointArr[0].position.position.X; 
               double vx = 0;
-              if(z-zHome < -300)
-                vx = 0.2;
+              double vy = 0;
+              if(z-zHome < -500)
+                vx = 0.04;
+              else if(z-zHome < -300)
+                vx = 0.02;
+              else if(z-zHome > 500)
+                vx = -0.04;
               else if(z-zHome > 300)
-                vx = -0.2;
+                vx = -0.02;
               else
                 vx = 0;
+
+              if(x-xHome < -500)
+                vy = 0.02;
+              else if(x-xHome < -300)
+                vy = 0.01;
+              else if(x-xHome > 500)
+                vy = -.02;
+              else if(x-xHome > 300)
+                vy= -.01;
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
               float lElbowPitchConv = (-1)*leftElbowPitch - 90;
@@ -569,9 +586,9 @@ int main(int argc, char **argv)
               //if (leftShoulderRoll < 0)
                 //leftShoulderRoll = 0;
               
-              ostr << "{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
+              ostr << "[\"number\"]="<<i<<",{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
                 lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
-                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<",0,0},}";
+                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
               string send = ostr.str();
               cout<<send<<"\n";
               //printRotation(aUsers[i]);
