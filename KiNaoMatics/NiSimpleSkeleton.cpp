@@ -30,7 +30,7 @@
 #define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"
 #define SAMPLE_XML_PATH_LOCAL "SamplesConfig.xml"
 #define JOINT_ARR_SIZE 15
-#define MAX_NUM_USERS 2
+#define MAX_NUM_USERS 1
 #define PI 3.14159265
 #define MDELAY 2
 #define TTL 16
@@ -496,7 +496,6 @@ int main(int argc, char **argv)
     bool firstRun = true;
     double zHome;
     double xHome;
-    double torsOrient;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
@@ -519,10 +518,10 @@ int main(int argc, char **argv)
                 firstRun=false;
                 zHome = jointArr[0].position.position.Z;
                 xHome = jointArr[0].position.position.X;
-                torsOrient = jointArr[0].orientation.orientation.elements[6];
               }
               double z = jointArr[0].position.position.Z;
               double x = jointArr[0].position.position.X; 
+              double torso = jointArr[0].orientation.orientation.elements[6];
               double vx = 0;
               double vy = 0;
               double vz = 0;
@@ -549,16 +548,16 @@ int main(int argc, char **argv)
               else
                 vy = 0;
 
-              if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 350)
+              if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 450)
                 kick = true;
-              else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 350)
+              else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 450)
                 kick = true;
               else
                 kick=false;
               
-              if(torsOrient > 0.2)
+              if(torso > 0.5)
                 vz = 0.15;
-              else if(torsOrient < -0.2)
+              else if(torso < -0.5)
                 vz = -0.15;
               else
                 vz = 0;
@@ -619,12 +618,12 @@ int main(int argc, char **argv)
               
               printf("\nlRoll: %6f", leftShoulderRoll);
              
-              ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,"<<headAngle*PI/180<<"},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
+              ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,nil},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
                 lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
-                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<","<<vz<<"},}";
+                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
               string send = ostr.str();
               cout<<"\n"<<send<<"\n";
-              printRotation(aUsers[i]);
+              cout<<"\n"<<torso<<"\n";
               commSend(send);
               lHand = jointArr[8];
               rHand = jointArr[7];
