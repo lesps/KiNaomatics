@@ -564,15 +564,15 @@ int main(int argc, char **argv)
 
               float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
               float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
-              float lElbowPitchConv = abs(leftElbowPitch) - 180;
+              float lElbowPitchConv = abs(leftElbowPitch) - 180.0f;
               float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
               float leftShoulderPitch = findAngle(jointArr[4], jointArr[10], jointArr[6], 1);
-              float lShoulderPitchConv = (leftShoulderPitch + 90);
+              float lShoulderPitchConv = leftShoulderPitch + 90.0f;
               float rightElbowPitch = findAngle(jointArr[5], jointArr[7], jointArr[3], 0);
-              float rElbowPitchConv = 180 - abs(rightElbowPitch);
+              float rElbowPitchConv = 180.0f - abs(rightElbowPitch);
               float rightShoulderRoll = findAngle(jointArr[3], jointArr[9], jointArr[5], 0);
               float rightShoulderPitch = findAngle(jointArr[3], jointArr[9], jointArr[5], 1);
-              float rShoulderPitchConv = rightShoulderPitch + 90;
+              float rShoulderPitchConv = rightShoulderPitch + 90.0f;
               float rightElbowRoll = findAngle(jointArr[5], jointArr[7], rHand, 1);
               float leftElbowRoll = findAngle(jointArr[6], jointArr[8], lHand, 1);
               
@@ -581,7 +581,7 @@ int main(int argc, char **argv)
               if (lElbowPitchConv < -90)
                 lElbowPitchConv = -90;
              
-              printf("\nElbow: %6f, Corrected: %6f", leftElbowPitch, lElbowPitchConv);
+              printf("\nlElbow: %6f, Corrected: %6f", leftElbowPitch, lElbowPitchConv);
 
               if (lShoulderPitchConv > 360/PI)
                 lShoulderPitchConv = 360/PI;
@@ -595,7 +595,7 @@ int main(int argc, char **argv)
               if (rElbowPitchConv < 0)
                 rElbowPitchConv = 0;
 
-              printf("\nElbow: %6f, Corrected: %6f", rightElbowPitch, rElbowPitchConv);
+              printf("\nrElbow: %6f, Corrected: %6f", rightElbowPitch, rElbowPitchConv);
 
               if (rShoulderPitchConv > 360/PI)
                 rShoulderPitchConv = 360/PI;
