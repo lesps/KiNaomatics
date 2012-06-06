@@ -627,7 +627,7 @@ int main(int argc, char **argv)
               commSend(send);
               lHand = jointArr[8];
               rHand = jointArr[7];
-              usleep(50000);             
+              usleep(2500);             
             }
         }
         
