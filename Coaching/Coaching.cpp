@@ -268,40 +268,6 @@ void XN_CALLBACK_TYPE UserCalibration_CalibrationComplete(xn::SkeletonCapability
     }
 }
 
-float findAngle(XnSkeletonJointTransformation refJoint,
-                XnSkeletonJointTransformation joint1,
-                XnSkeletonJointTransformation joint2,
-                int plane) {
-  float pX, pY, pZ, qX, qY, qZ, offsetX, offsetY, offsetZ, result; 
-  
-  //Get coordinates of the point of reference
-  offsetX = refJoint.position.position.X;
-  offsetY = refJoint.position.position.Y;
-  offsetZ = refJoint.position.position.Z;
-  
-  //Transform the origin of the coordinate axis
-  pX = joint1.position.position.X - offsetX;
-  pY = joint1.position.position.Y - offsetY;
-  pZ = joint1.position.position.Z - offsetZ;
-  qX = joint2.position.position.X - offsetX;
-  qY = joint2.position.position.Y - offsetY;
-  qZ = joint2.position.position.Z - offsetZ;
-  
-  //Calculate the angle in the given plane
-  if(plane==0)
-    result = (atan2(pY,pX) - atan2(qY,qX)) * 180/PI;
-  else
-    result = (atan2(pZ,pY) - atan2(qZ,qY)) * 180/PI;
-
-  //Adjust for answers >pi or <-pi
-  if(result < -180)
-    result += 360;
-  else if(result > 180)
-    result -= 360;
-
-  return result;
-}
-
 int getJoints(XnUserID user){
 
   //Locals
@@ -312,78 +278,15 @@ int getJoints(XnUserID user){
     jointArr[0] = joint;
   } else return 0;
 
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_HEAD,joint);
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_HAND,joint);
   if(joint.position.fConfidence > .8){
     jointArr[1] = joint;
   } else return 0;
 
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_NECK,joint);
+  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_HAND,joint);
   if(joint.position.fConfidence > .8){
     jointArr[2] = joint;
   } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_SHOULDER,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[3] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_SHOULDER,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[4] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_ELBOW,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[5] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_ELBOW,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[6] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_HAND,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[7] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_HAND,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[8] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_HIP,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[9] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_HIP,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[10] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_KNEE,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[11] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_KNEE,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[12] = joint;
-  } else return 0;
-
-  /**
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_RIGHT_FOOT,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[13] = joint;
-  } else return 0;
-
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_LEFT_FOOT,joint);
-  if(joint.position.fConfidence > .8){
-    jointArr[14] = joint;
-  } else return 0;
-
-  **/
 
   //The function succeeded
   return 1;
@@ -394,21 +297,6 @@ int getJoints(XnUserID user){
 {								    \
     printf("%s failed: %s\n", what, xnGetStatusString(nRetVal));    \
     return nRetVal;						    \
-}
-
-void printRotation(XnUserID user){
-  XnSkeletonJointTransformation joint;
-  int i;
-  g_UserGenerator.GetSkeletonCap().GetSkeletonJoint(user,XN_SKEL_TORSO,joint); 
-  XnSkeletonJointOrientation orientation = joint.orientation;
-  if(orientation.fConfidence > .8){
-    for(i =0; i < 9; ++i){
-      if(i%3==0)
-        printf("\n");
-      printf("%.3f\t",orientation.orientation.elements[i]);
-    }
-    printf("\n\n\n\n");
-  }
 }
 
 int main(int argc, char **argv)
@@ -491,15 +379,9 @@ int main(int argc, char **argv)
         printf("Assume calibration pose\n");
     }
     XnUInt32 epochTime = 0;
-    XnSkeletonJointTransformation lHand;
-    XnSkeletonJointTransformation rHand;
-    bool firstRun = true;
-    double zHome;
-    double xHome;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
-        // print the torso information for the first user already tracking
         nUsers=MAX_NUM_USERS;
         g_UserGenerator.GetUsers(aUsers, nUsers);
         int numTracked=0;
@@ -509,124 +391,46 @@ int main(int argc, char **argv)
             ostringstream ostr;
             if(g_UserGenerator.GetSkeletonCap().IsTracking(aUsers[i])==FALSE)
               continue;
-            ostr<<"{[\"tracking\"]=true,";
+            ostr<<"{[\"coaching\"]=true,";
 
             if(getJoints(aUsers[i])){
-              if(firstRun){
-                lHand = jointArr[8];
-                rHand = jointArr[7];
-                firstRun=false;
-                zHome = jointArr[0].position.position.Z;
-                xHome = jointArr[0].position.position.X;
-              }
-              double z = jointArr[0].position.position.Z;
-              double x = jointArr[0].position.position.X; 
-              double torso = jointArr[0].orientation.orientation.elements[6];
-              double vx = 0;
-              double vy = 0;
-              double vz = 0;
-              bool kick = false;
-              if(z-zHome < -500)
-                vx = 0.04;
-              else if(z-zHome < -300)
-                vx = 0.02;
-              else if(z-zHome > 500)
-                vx = -0.04;
-              else if(z-zHome > 300)
-                vx = -0.02;
+              double xTorso = jointArr[0].position.position.X; 
+              double yTorso = jointArr[0].position.position.Y;
+              double zTorso = jointArr[0].position.position.Z;
+              double xRHand = jointArr[1].position.position.X;
+              double yRHand = jointArr[1].position.position.Y;
+              double zRHand = jointArr[1].position.position.Z;
+              double xLHand = jointArr[2].position.position.X;
+              double yLHand = jointArr[2].position.position.Y;
+              double zLHand = jointArr[2].position.position.Z;
+              double dx = 600; //Rough estimate value
+              double dy = 600; //Rough estimate value
+              double dz = 550; //Rough estimate value
+
+              if ((xRHand-xTorso)>dx)
+                printf("\n\nRight Arm is OUT");
+              else if ((yRHand-yTorso)>dy)
+                printf("\nRight arm is UP");
+              else if ((zTorso-zRHand)>dz)
+                printf("\nRight arm is FORWARD");
               else
-                vx = 0;
+                printf("\nRight arm is INITIAL");
 
-              if(x-xHome < -500)
-                vy = 0.02;
-              else if(x-xHome < -300)
-                vy = 0.01;
-              else if(x-xHome > 500)
-                vy = -.02;
-              else if(x-xHome > 300)
-                vy= -.01;
+              if ((xTorso-xLHand)>dx)
+                printf("\n\nLeft Arm is OUT");
+              else if ((yLHand-yTorso)>dy)
+                printf("\nLeft arm is UP");
+              else if ((zTorso-zLHand)>dz)
+                printf("\nLeft arm is FORWARD");
               else
-                vy = 0;
+                printf("\nLeft arm is INITIAL\n");
 
-              if(jointArr[9].position.position.Z - jointArr[11].position.position.Z > 450)
-                kick = true;
-              else if(jointArr[10].position.position.Z - jointArr[12].position.position.Z > 450)
-                kick = true;
-              else
-                kick=false;
-              
-              if(torso > 0.5)
-                vz = 0.15;
-              else if(torso < -0.5)
-                vz = -0.15;
-              else
-                vz = 0;
-
-              float headAngle = findAngle(jointArr[2], jointArr[1], jointArr[0], 1);
-              float leftElbowPitch = findAngle(jointArr[6], jointArr[8], jointArr[4], 0);
-              float lElbowPitchConv = abs(leftElbowPitch) - 180.0f;
-              float leftShoulderRoll = findAngle(jointArr[4], jointArr[10], jointArr[6], 0);
-              float leftShoulderPitch = findAngle(jointArr[4], jointArr[10], jointArr[6], 1);
-              float lShoulderPitchConv = leftShoulderPitch + 90.0f;
-              float rightElbowPitch = findAngle(jointArr[5], jointArr[7], jointArr[3], 0);
-              float rElbowPitchConv = 180.0f - abs(rightElbowPitch);
-              float rightShoulderRoll = findAngle(jointArr[3], jointArr[9], jointArr[5], 0);
-              float rightShoulderPitch = findAngle(jointArr[3], jointArr[9], jointArr[5], 1);
-              float rShoulderPitchConv = rightShoulderPitch + 90.0f;
-              float rightElbowRoll = findAngle(jointArr[5], jointArr[7], rHand, 1);
-              float leftElbowRoll = findAngle(jointArr[6], jointArr[8], lHand, 1);
-              
-              if (lElbowPitchConv > 0) 
-                lElbowPitchConv = 0;
-              if (lElbowPitchConv < -90)
-                lElbowPitchConv = -90;
-             
-              printf("\nlElbow: %6f, Corrected: %6f", leftElbowPitch, lElbowPitchConv);
-
-              if (lShoulderPitchConv > 360/PI)
-                lShoulderPitchConv = 360/PI;
-              if (lShoulderPitchConv < -360/PI)
-                lShoulderPitchConv = -360/PI;
-
-              printf("\nlShoulder: %6f, Corrected: %6f", leftShoulderPitch, lShoulderPitchConv);
-              
-              if (rElbowPitchConv > 90)
-                rElbowPitchConv = 90;
-              if (rElbowPitchConv < 0)
-                rElbowPitchConv = 0;
-
-              printf("\nrElbow: %6f, Corrected: %6f", rightElbowPitch, rElbowPitchConv);
-
-              if (rShoulderPitchConv > 360/PI)
-                rShoulderPitchConv = 360/PI;
-              if (rShoulderPitchConv < -360/PI)
-                rShoulderPitchConv = -360/PI;
-
-              printf("\nrShoulder: %6f, Corrected: %6f", rightShoulderPitch, rShoulderPitchConv);
-
-              if (rightShoulderRoll > 0)
-                rightShoulderRoll = 0;
-              if (rightShoulderRoll < -90)
-                rightShoulderRoll = -90;
-              
-              printf("\nrRoll: %6f", rightShoulderRoll);
-
-              if (leftShoulderRoll > 90)
-                leftShoulderRoll = 90;
-              if (leftShoulderRoll < 0)
-                leftShoulderRoll = 0;
-              
-              printf("\nlRoll: %6f", leftShoulderRoll);
-             
-              ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,nil},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
-                lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
-                ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
+             // ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,nil},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
+               // lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
+               // ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
               string send = ostr.str();
               cout<<"\n"<<send<<"\n";
-              cout<<"\n"<<torso<<"\n";
               commSend(send);
-              lHand = jointArr[8];
-              rHand = jointArr[7];
               usleep(2500);             
             }
         }
