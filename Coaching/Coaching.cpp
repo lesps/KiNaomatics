@@ -36,6 +36,14 @@
 #define TTL 16
 #define MAX_LENGTH 160000 //Size for sending 640*480 yuyv data without resampling
 
+//Parameters for arm positions
+#define DX 600
+#define DY 600
+#define DZ 550
+#define TX 200
+#define TY 200
+#define TZ 200
+
 //---------------------------------------------------------------------------
 // Globals
 //---------------------------------------------------------------------------
@@ -379,6 +387,8 @@ int main(int argc, char **argv)
         printf("Assume calibration pose\n");
     }
     XnUInt32 epochTime = 0;
+    bool firstRun = true;
+    int rState,lState;
     while (!xnOSWasKeyboardHit())
     {
         g_Context.WaitOneUpdateAll(g_UserGenerator);
@@ -394,6 +404,11 @@ int main(int argc, char **argv)
             ostr<<"{[\"coaching\"]=true,";
 
             if(getJoints(aUsers[i])){
+              if (firstRun) {
+                rState = 0;
+                lState = 0;
+              }
+
               double xTorso = jointArr[0].position.position.X; 
               double yTorso = jointArr[0].position.position.Y;
               double zTorso = jointArr[0].position.position.Z;
@@ -403,31 +418,104 @@ int main(int argc, char **argv)
               double xLHand = jointArr[2].position.position.X;
               double yLHand = jointArr[2].position.position.Y;
               double zLHand = jointArr[2].position.position.Z;
-              double dx = 600; //Rough estimate value
-              double dy = 600; //Rough estimate value
-              double dz = 550; //Rough estimate value
 
-              if ((xRHand-xTorso)>dx)
-                printf("\n\nRight Arm is OUT");
-              else if ((yRHand-yTorso)>dy)
-                printf("\nRight arm is UP");
-              else if ((zTorso-zRHand)>dz)
-                printf("\nRight arm is FORWARD");
+              //------------------------------------------------------------------
+              //Coaching State Machine                                       
+              //
+              //Robot 1 corresponds to right arm, Robot 2 corresponds to left arm
+              //
+              //State 0: Initial State
+              //State 1: Transitional State
+              //State 2: Offensive State
+              //State 3: Defensive State
+              //State 4: Stationary State
+              //
+              //Transitions only exist in the form Initial<->Transitional<->State
+              //You must return to the Initial state to issue new coaching cues
+              //------------------------------------------------------------------
+
+              //State machine for right arm; Robot 1
+              if (rState == 0) {
+                if ((zTorso-zRHand)>TZ or (xRHand-xTorso)>TX or (yRHand-yTorso)>TY)
+                  rState = 1;
+              } 
+              else if (rState == 1) {
+                if ((zTorso-zRHand)<TZ and (xRHand-xTorso)<TX and (yRHand-yTorso)<TY) {
+                  rState = 0;
+                  printf("Robot 1 INITIAL!");
+                }
+                if ((zTorso-zRHand)>DZ) {
+                  rState = 2;
+                  printf("Robot 1 ATTACK!");
+                }
+                else if ((xRHand-xTorso)>DX) {
+                  rState = 3;
+                  printf("Robot 1 DEFEND!");
+                }
+                else if ((yRHand-yTorso)>DY) {
+                  rState = 4;
+                  printf("Robot 1 STOP!");
+                }
+                else
+                  printf("Robot 1 Transitioning");
+              }
+              else if (rState == 2) {
+                if ((zTorso-zRHand)<DZ)
+                  rState = 1;                
+              }
+              else if (rState == 3) {
+                if ((xRHand-xTorso)<DX)
+                  rState = 1;
+              }
+              else if (rState == 4) {
+                if ((yRHand-yTorso)<DY)
+                  rState = 1;
+              }
               else
-                printf("\nRight arm is INITIAL");
+                printf("The rArm state is %d. How is that possible?!", rState);
 
-              if ((xTorso-xLHand)>dx)
-                printf("\n\nLeft Arm is OUT");
-              else if ((yLHand-yTorso)>dy)
-                printf("\nLeft arm is UP");
-              else if ((zTorso-zLHand)>dz)
-                printf("\nLeft arm is FORWARD");
+              //State machine for left arm; Robot 2
+              if (lState == 0) {
+                if ((zTorso-zLHand)>TZ or (xTorso-xLHand)>TX or (yLHand-yTorso)>TY)
+                  lState = 1;
+              } 
+              else if (lState == 1) {
+                if ((zTorso-zLHand)<TZ and (xTorso-xLHand)<TX and (yLHand-yTorso)<TY) {
+                  lState = 0;
+                  printf("Robot 1 INITIAL!");
+                }
+                if ((zTorso-zLHand)>DZ) {
+                  lState = 2;
+                  printf("Robot 1 ATTACK!");
+                }
+                else if ((xTorso-xLHand)>DX) {
+                  lState = 3;
+                  printf("Robot 1 DEFEND!");
+                }
+                else if ((yLHand-yTorso)>DY) {
+                  lState = 4;
+                  printf("Robot 1 STOP!");
+                }
+                else
+                  printf("Robot 1 Transitioning");
+              }
+              else if (lState == 2) {
+                if ((zTorso-zLHand)<DZ)
+                  lState = 1;                
+              }
+              else if (lState == 3) {
+                if ((xTorso-xLHand)<DX)
+                  lState = 1;
+              }
+              else if (lState == 4) {
+                if ((yLHand-yTorso)<DY)
+                  lState = 1;
+              }
               else
-                printf("\nLeft arm is INITIAL\n");
+                printf("The lArm state is %d. How is that possible?!", lState);
 
-             // ostr << "[\"number\"]="<<i<<",[\"kick\"]="<<kick<<",{nil,nil},{"<<lShoulderPitchConv*PI/180<<","<<leftShoulderRoll*PI/180<<","<<leftElbowRoll*PI/180<<","<<
-               // lElbowPitchConv*PI/180<<"},{"<<rShoulderPitchConv*PI/180<<","<<rightShoulderRoll*PI/180<<","<<rightElbowRoll*PI/180<<
-               // ","<<rElbowPitchConv*PI/180<<"},{"<<vx<<","<<vy<<",0},}";
+
+              ostr << "[\"strat\"]=" << "{" << rState << "," << lState << "}";
               string send = ostr.str();
               cout<<"\n"<<send<<"\n";
               commSend(send);
