@@ -39,10 +39,10 @@
 //Parameters for arm positions
 #define DX 600
 #define DY 600
-#define DZ 550
-#define TX 200
-#define TY 200
-#define TZ 200
+#define DZ 500
+#define TX 300
+#define TY 300
+#define TZ 300
 
 //---------------------------------------------------------------------------
 // Globals
@@ -309,7 +309,7 @@ int getJoints(XnUserID user){
 
 int main(int argc, char **argv)
 {
-    commInit("96.69.123.255", 54321);
+    commInit("192.168.69.255", 12500);
     XnStatus nRetVal = XN_STATUS_OK;
     xn::EnumerationErrors errors;
 
@@ -401,12 +401,13 @@ int main(int argc, char **argv)
             ostringstream ostr;
             if(g_UserGenerator.GetSkeletonCap().IsTracking(aUsers[i])==FALSE)
               continue;
-            ostr<<"{[\"coaching\"]=true,";
+            //ostr<<"{[\"coaching\"]=true,";
 
             if(getJoints(aUsers[i])){
               if (firstRun) {
                 rState = 0;
                 lState = 0;
+                firstRun = false;
               }
 
               double xTorso = jointArr[0].position.position.X; 
@@ -428,7 +429,7 @@ int main(int argc, char **argv)
               //State 1: Transitional State
               //State 2: Offensive State
               //State 3: Defensive State
-              //State 4: Stationary State
+              //State 4: Supportive State
               //
               //Transitions only exist in the form Initial<->Transitional<->State
               //You must return to the Initial state to issue new coaching cues
@@ -454,21 +455,21 @@ int main(int argc, char **argv)
                 }
                 else if ((yRHand-yTorso)>DY) {
                   rState = 4;
-                  printf("Robot 1 STOP!");
+                  printf("Robot 1 SUPPORT!");
                 }
                 else
                   printf("Robot 1 Transitioning");
               }
               else if (rState == 2) {
-                if ((zTorso-zRHand)<DZ)
+                if ((zTorso-zRHand)<DZ and (xRHand-xTorso)<DX and (yRHand-yTorso)<DY)
                   rState = 1;                
               }
               else if (rState == 3) {
-                if ((xRHand-xTorso)<DX)
+                if ((zTorso-zRHand)<DZ and (xRHand-xTorso)<DX and (yRHand-yTorso)<DY)
                   rState = 1;
               }
               else if (rState == 4) {
-                if ((yRHand-yTorso)<DY)
+                if ((zTorso-zRHand)<DZ and (xRHand-xTorso)<DX and (yRHand-yTorso)<DY)
                   rState = 1;
               }
               else
@@ -494,28 +495,28 @@ int main(int argc, char **argv)
                 }
                 else if ((yLHand-yTorso)>DY) {
                   lState = 4;
-                  printf("Robot 1 STOP!");
+                  printf("Robot 1 SUPPORT!");
                 }
                 else
                   printf("Robot 1 Transitioning");
               }
               else if (lState == 2) {
-                if ((zTorso-zLHand)<DZ)
+                if ((zTorso-zLHand)<DZ and (xTorso-xLHand)<DX and (yLHand-yTorso)<DY)
                   lState = 1;                
               }
               else if (lState == 3) {
-                if ((xTorso-xLHand)<DX)
+                if ((zTorso-zLHand)<DZ and (xTorso-xLHand)<DX and (yLHand-yTorso)<DY)
                   lState = 1;
               }
               else if (lState == 4) {
-                if ((yLHand-yTorso)<DY)
+                if ((zTorso-zLHand)<DZ and (xTorso-xLHand)<DX and (yLHand-yTorso)<DY)
                   lState = 1;
               }
               else
                 printf("The lArm state is %d. How is that possible?!", lState);
 
 
-              ostr << "[\"strat\"]=" << "{" << rState << "," << lState << "}";
+              ostr << "{[\"strat\"]=" << "{" << rState << "," << lState << "}}";
               string send = ostr.str();
               cout<<"\n"<<send<<"\n";
               commSend(send);
